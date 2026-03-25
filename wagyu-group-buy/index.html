@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🍊橙姐和牛肉铺 | 牛羊肉专区</title>
+    <meta
+      name="description"
+      content="和牛肋条、金钱腱、和牛吊龙、和牛肥牛、羊肉卷、牛仔骨限时开团，支持购物车自助下单并提交到 Google Sheets。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <div class="ticker" aria-label="site credit">
+        <div class="ticker-track">
+          <span>该网站由 @bingdnboujee 制作，请关注她的 GitHub：https://github.com/bingdboujee</span>
+          <span>该网站由 @bingdnboujee 制作，请关注她的 GitHub：https://github.com/bingdboujee</span>
+        </div>
+      </div>
+
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand-mark">W</span>
+            <div>
+              <p>🍊橙姐和牛肉铺</p>
+              <span>精选牛羊肉专区</span>
+            </div>
+          </div>
+          <a class="topbar-link topbar-cart-link" href="#checkout">
+            <span class="cart-logo" aria-hidden="true"></span>
+            <span>去购物车</span>
+          </a>
+        </nav>
+
+        <div class="hero-grid">
+          <section class="hero-copy">
+            <p class="eyebrow">Beef & Lamb</p>
+            <h1>牛羊肉专区</h1>
+            <p class="hero-text">
+              精选 6 款适合火锅、烧烤和家庭囤货的高频商品。直接加到购物车，填写微信昵称和微信号后即可提交订单。
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#products">开始选品</a>
+              <a class="btn btn-secondary" href="#checkout">查看购物车</a>
+            </div>
+
+            <div class="category-chips">
+              <span>火锅精选</span>
+              <span>烧烤推荐</span>
+              <span>冷链配送</span>
+              <span>购物车自助下单</span>
+            </div>
+          </section>
+
+          <aside class="hero-card">
+            <p class="card-kicker">购物提醒</p>
+            <h2>现选现加，右侧结算</h2>
+            <div class="price-line">
+              <span class="price-now" id="hero-cart-count">0 件</span>
+              <span class="price-old">已加入购物车</span>
+            </div>
+            <ul class="combo-list">
+              <li>商品卡片直接加减数量</li>
+              <li>提交时带微信昵称、微信号、备注</li>
+            </ul>
+            <p class="card-note">你后续只需要把提交地址换成自己的 Google Apps Script Web App。</p>
+          </aside>
+        </div>
+      </header>
+
+      <main>
+        <section class="section section-intro" id="products">
+          <div class="section-heading">
+            <p class="eyebrow">Products</p>
+            <h2>全部商品</h2>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card featured" data-product-card data-name="和牛肋条" data-price="14" data-unit="3-4磅">
+              <div class="product-media media-rib">
+                <span class="product-badge">Best Seller</span>
+                <div class="media-copy">
+                  <small>Wagyu Rib Fingers</small>
+                  <strong>肋条</strong>
+                </div>
+              </div>
+              <span class="tag">烧烤王者</span>
+              <h3>和牛肋条</h3>
+              <p>脂香足、肉感厚，适合烧烤、铁板和空气炸锅，越嚼越香。</p>
+              <div class="product-meta">
+                <strong>$14 / 3-4磅</strong>
+                <span>300+ 人想买</span>
+              </div>
+              <div class="qty-picker">
+                <button type="button" class="qty-btn" data-action="decrease">-</button>
+                <span class="qty-value" data-qty>0</span>
+                <button type="button" class="qty-btn" data-action="increase">+</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card data-name="金钱腱" data-price="8.5" data-unit="3-4磅">
+              <div class="product-media media-shank">
+                <span class="product-badge">Slow Cook</span>
+                <div class="media-copy">
+                  <small>Gold Coin Shank</small>
+                  <strong>金钱腱</strong>
+                </div>
+              </div>
+              <span class="tag">炖煮推荐</span>
+              <h3>金钱腱</h3>
+              <p>筋花漂亮，卤煮后层次丰富，做凉切和牛腱子都很出彩。</p>
+              <div class="product-meta">
+                <strong>$8.5 / 3-4磅</strong>
+                <span>适合卤煮</span>
+              </div>
+              <div class="qty-picker">
+                <button type="button" class="qty-btn" data-action="decrease">-</button>
+                <span class="qty-value" data-qty>0</span>
+                <button type="button" class="qty-btn" data-action="increase">+</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card data-name="和牛吊龙" data-price="17" data-unit="12oz">
+              <div class="product-media media-dragon">
+                <span class="product-badge">Hot Pot</span>
+                <div class="media-copy">
+                  <small>Thin Sliced Chuck</small>
+                  <strong>吊龙</strong>
+                </div>
+              </div>
+              <span class="tag">潮汕火锅感</span>
+              <h3>和牛吊龙</h3>
+              <p>鲜嫩带弹性，薄切涮 8 秒就能吃，入口细嫩、奶香明显。</p>
+              <div class="product-meta">
+                <strong>$17 / 12oz</strong>
+                <span>火锅推荐</span>
+              </div>
+              <div class="qty-picker">
+                <button type="button" class="qty-btn" data-action="decrease">-</button>
+                <span class="qty-value" data-qty>0</span>
+                <button type="button" class="qty-btn" data-action="increase">+</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card data-name="和牛肥牛" data-price="18" data-unit="12oz">
+              <div class="product-media media-roll">
+                <span class="product-badge">Popular</span>
+                <div class="media-copy">
+                  <small>Fatty Beef Slices</small>
+                  <strong>肥牛</strong>
+                </div>
+              </div>
+              <span class="tag">爆单款</span>
+              <h3>和牛肥牛</h3>
+              <p>肥瘦均匀，火锅、寿喜锅、洋葱肥牛饭都很稳，接受度最高。</p>
+              <div class="product-meta">
+                <strong>$18 / 12oz</strong>
+                <span>回购很高</span>
+              </div>
+              <div class="qty-picker">
+                <button type="button" class="qty-btn" data-action="decrease">-</button>
+                <span class="qty-value" data-qty>0</span>
+                <button type="button" class="qty-btn" data-action="increase">+</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card data-name="羊肉卷" data-price="18" data-unit="16oz">
+              <div class="product-media media-lamb">
+                <span class="product-badge">Value Pick</span>
+                <div class="media-copy">
+                  <small>Lamb Rolls</small>
+                  <strong>羊肉卷</strong>
+                </div>
+              </div>
+              <span class="tag">加购率高</span>
+              <h3>羊肉卷</h3>
+              <p>肉香直给、膻味轻，做清汤锅也压得住场，冬天开团必带一份。</p>
+              <div class="product-meta">
+                <strong>$18 / 16oz</strong>
+                <span>好搭配</span>
+              </div>
+              <div class="qty-picker">
+                <button type="button" class="qty-btn" data-action="decrease">-</button>
+                <span class="qty-value" data-qty>0</span>
+                <button type="button" class="qty-btn" data-action="increase">+</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card data-name="和牛牛仔骨" data-price="15" data-unit="3磅">
+              <div class="product-media media-bone">
+                <span class="product-badge">BBQ Pick</span>
+                <div class="media-copy">
+                  <small>Wagyu Short Ribs</small>
+                  <strong>和牛牛仔骨</strong>
+                </div>
+              </div>
+              <span class="tag">宴客选手</span>
+              <h3>和牛牛仔骨</h3>
+              <p>适合韩式烤肉、黑椒煎烤，骨边肉汁香气足，端上桌就有排面。</p>
+              <div class="product-meta">
+                <strong>$15 / 3磅</strong>
+                <span>聚餐推荐</span>
+              </div>
+              <div class="qty-picker">
+                <button type="button" class="qty-btn" data-action="decrease">-</button>
+                <span class="qty-value" data-qty>0</span>
+                <button type="button" class="qty-btn" data-action="increase">+</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section checkout-section" id="checkout">
+          <div class="checkout-layout">
+            <div class="order-copy">
+              <p class="eyebrow">Cart</p>
+              <h2>购物车结算</h2>
+              <p>
+                当前页面默认预留了 Google Sheets
+                提交接口。如果你还没填接口地址，页面会先提示你配置；填好后就能正式收单。
+              </p>
+            </div>
+
+            <form class="order-form" id="checkout-form">
+              <div class="cart-panel">
+                <div class="cart-header">
+                  <h3>
+                    <span class="cart-logo" aria-hidden="true"></span>
+                    <span>购物车</span>
+                  </h3>
+                  <button type="button" class="cart-clear" id="clear-cart">清空</button>
+                </div>
+                <div class="cart-items" id="cart-items">
+                  <p class="empty-cart">还没选商品，先去上面加几份试试。</p>
+                </div>
+
+                <div class="summary-grid">
+                  <div>
+                    <span>商品件数</span>
+                    <strong id="summary-count">0 件</strong>
+                  </div>
+                  <div>
+                    <span>商品小计</span>
+                    <strong id="summary-subtotal">$0</strong>
+                  </div>
+                  <div>
+                    <span>优惠金额</span>
+                    <strong id="summary-discount">-$0</strong>
+                  </div>
+                  <div>
+                    <span>实付金额</span>
+                    <strong id="summary-total">$0</strong>
+                  </div>
+                </div>
+              </div>
+
+              <label>
+                微信昵称
+                <input type="text" name="nickname" placeholder="例如：Luna" required />
+              </label>
+              <label>
+                微信号
+                <input type="text" name="phone" placeholder="用于联系和确认订单" required />
+              </label>
+              <label>
+                收货备注
+                <textarea
+                  name="note"
+                  rows="4"
+                  placeholder="例如：周五收货，少冰袋，和朋友一起拼单"
+                ></textarea>
+              </label>
+
+              <button class="btn btn-primary btn-full" type="submit" id="submit-order">提交订单</button>
+              <p class="form-feedback" id="form-feedback" aria-live="polite"></p>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
