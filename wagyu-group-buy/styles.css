@@ -439,6 +439,12 @@ body {
     linear-gradient(135deg, #473136, #8d5c69);
 }
 
+.media-chicken {
+  background:
+    linear-gradient(140deg, rgba(254, 240, 138, 0.16), transparent 34%),
+    linear-gradient(135deg, #3b3420, #8f7342);
+}
+
 .media-lamb {
   background:
     linear-gradient(140deg, rgba(255, 224, 201, 0.14), transparent 34%),

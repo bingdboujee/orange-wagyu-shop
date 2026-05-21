@@ -1,5 +1,5 @@
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwGW4XtELp5p8PPG_qQq8KCI2HwawgVWpNcX7wMfWS18QkfBuTsnW8Huv0huWlS0-_rUg/exec";
+  "https://script.google.com/macros/s/AKfycbwgO_quSJi572HXizDgLMFPdHlVA64BmtfTVg9YXFpZ0129y7gA3SUkpBRi6gKgier6/exec";
 
 const productCards = [...document.querySelectorAll("[data-product-card]")];
 const form = document.querySelector("#checkout-form");
@@ -24,6 +24,10 @@ const products = productCards.map((card) => ({
   name: card.dataset.name,
   unit: card.dataset.unit,
   price: Number(card.dataset.price),
+  priceUnit: card.dataset.priceUnit || "份",
+  minQuantity: Number(card.dataset.minQuantity || 1),
+  minWeight: Number(card.dataset.minWeight || 0),
+  maxWeight: Number(card.dataset.maxWeight || 0),
   card,
   qtyEl: card.querySelector("[data-qty]"),
 }));
@@ -32,11 +36,25 @@ const cart = Object.fromEntries(products.map((product) => [product.id, 0]));
 
 function getCartItems() {
   return products
-    .map((product) => ({
-      ...product,
-      quantity: cart[product.id],
-      subtotal: cart[product.id] * product.price,
-    }))
+    .map((product) => {
+      const quantity = cart[product.id];
+      const variableWeight = product.minWeight > 0 && product.maxWeight > 0;
+      const subtotalMin = variableWeight
+        ? quantity * product.price * product.minWeight
+        : quantity * product.price;
+      const subtotalMax = variableWeight
+        ? quantity * product.price * product.maxWeight
+        : subtotalMin;
+
+      return {
+        ...product,
+        quantity,
+        variableWeight,
+        subtotal: subtotalMin,
+        subtotalMin,
+        subtotalMax,
+      };
+    })
     .filter((item) => item.quantity > 0);
 }
 
@@ -44,12 +62,24 @@ function getDiscount(count, subtotal) {
   return 0;
 }
 
+function hasAmountRange(min, max) {
+  return Math.abs(max - min) >= 0.01;
+}
+
+function formatAmountRange(min, max) {
+  return hasAmountRange(min, max)
+    ? `${currency.format(min)}-${currency.format(max)}`
+    : currency.format(min);
+}
+
 function renderCart() {
   const items = getCartItems();
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0);
-  const discount = getDiscount(count, subtotal);
-  const total = Math.max(subtotal - discount, 0);
+  const subtotalMin = items.reduce((sum, item) => sum + item.subtotalMin, 0);
+  const subtotalMax = items.reduce((sum, item) => sum + item.subtotalMax, 0);
+  const discount = getDiscount(count, subtotalMin);
+  const totalMin = Math.max(subtotalMin - discount, 0);
+  const totalMax = Math.max(subtotalMax - discount, 0);
 
   products.forEach((product) => {
     product.qtyEl.textContent = String(cart[product.id]);
@@ -68,8 +98,8 @@ function renderCart() {
               <span>${item.unit} x ${item.quantity}</span>
             </div>
             <div class="cart-item-meta">
-              <span>${currency.format(item.price)} / 份</span>
-              <strong>${currency.format(item.subtotal)}</strong>
+              <span>${currency.format(item.price)} / ${item.priceUnit}</span>
+              <strong>${formatAmountRange(item.subtotalMin, item.subtotalMax)}</strong>
             </div>
           </div>
         `
@@ -78,18 +108,20 @@ function renderCart() {
   }
 
   summaryCount.textContent = `${count} 件`;
-  summarySubtotal.textContent = currency.format(subtotal);
+  summarySubtotal.textContent = formatAmountRange(subtotalMin, subtotalMax);
   summaryDiscount.textContent = `-${currency.format(discount)}`;
-  summaryTotal.textContent = currency.format(total);
+  summaryTotal.textContent = formatAmountRange(totalMin, totalMax);
   heroCartCount.textContent = `${count} 件`;
 }
 
 function buildOrderPayload(formData) {
   const items = getCartItems();
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = items.reduce((sum, item) => sum + item.subtotal, 0);
-  const discount = getDiscount(itemCount, subtotal);
-  const total = Math.max(subtotal - discount, 0);
+  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+  const subtotalMin = items.reduce((sum, item) => sum + item.subtotalMin, 0);
+  const subtotalMax = items.reduce((sum, item) => sum + item.subtotalMax, 0);
+  const discount = getDiscount(totalQuantity, subtotalMin);
+  const totalMin = Math.max(subtotalMin - discount, 0);
+  const totalMax = Math.max(subtotalMax - discount, 0);
 
   return {
     orderId: `WG${Date.now()}`,
@@ -97,16 +129,25 @@ function buildOrderPayload(formData) {
     nickname: String(formData.get("nickname") || "").trim(),
     phone: String(formData.get("phone") || "").trim(),
     note: String(formData.get("note") || "").trim(),
-    itemCount,
-    subtotal,
+    subtotal: formatAmountRange(subtotalMin, subtotalMax),
+    subtotalMin,
+    subtotalMax,
     discount,
-    total,
+    total: formatAmountRange(totalMin, totalMax),
+    totalMin,
+    totalMax,
     items: items.map((item) => ({
       name: item.name,
       unit: item.unit,
       price: item.price,
+      priceUnit: item.priceUnit,
       quantity: item.quantity,
-      subtotal: item.subtotal,
+      variableWeight: item.variableWeight,
+      minWeight: item.minWeight,
+      maxWeight: item.maxWeight,
+      subtotal: formatAmountRange(item.subtotalMin, item.subtotalMax),
+      subtotalMin: item.subtotalMin,
+      subtotalMax: item.subtotalMax,
     })),
   };
 }
@@ -118,9 +159,19 @@ productCards.forEach((card) => {
       return;
     }
 
-    const id = card.dataset.name;
+    const product = products.find((item) => item.card === card);
+    const id = product.id;
     const action = button.dataset.action;
-    const nextValue = action === "increase" ? cart[id] + 1 : Math.max(cart[id] - 1, 0);
+    const currentValue = cart[id];
+    const nextValue =
+      action === "increase"
+        ? currentValue === 0
+          ? product.minQuantity
+          : currentValue + 1
+        : currentValue <= product.minQuantity
+          ? 0
+          : currentValue - 1;
+
     cart[id] = nextValue;
     renderCart();
   });
@@ -141,7 +192,7 @@ form.addEventListener("submit", async (event) => {
   const formData = new FormData(form);
   const payload = buildOrderPayload(formData);
 
-  if (payload.itemCount === 0) {
+  if (payload.items.length === 0) {
     feedback.textContent = "购物车还是空的，先选几份商品再提交。";
     return;
   }
@@ -166,7 +217,7 @@ form.addEventListener("submit", async (event) => {
       body: JSON.stringify(payload),
     });
 
-    feedback.textContent = `订单已提交，订单号 ${payload.orderId}。如果网络正常，数据会写入 Google Sheets。`;
+    feedback.textContent = `订单提交请求已发出，订单号 ${payload.orderId}。`;
     form.reset();
     Object.keys(cart).forEach((key) => {
       cart[key] = 0;

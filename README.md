@@ -1,6 +1,6 @@
 # Orange Wagyu Shop
 
-Static storefront for a small orange-themed wagyu group-buy page. The site lets customers browse beef and lamb products, adjust quantities in a cart, enter WeChat contact details, and submit the order to a Google Sheet through Google Apps Script.
+Static storefront for a small orange-themed wagyu group-buy page. The site lets customers browse beef, lamb, and chicken cartilage products, adjust quantities in a cart, enter WeChat contact details, and submit the order to a Google Sheet through Google Apps Script.
 
 ## What It Includes
 
@@ -39,6 +39,18 @@ No build step is required. This is a plain HTML/CSS/JavaScript project.
 5. Set access to the audience that should be allowed to submit orders.
 6. Copy the Web app URL into `GOOGLE_SCRIPT_URL` in `wagyu-group-buy/script.js`.
 
+After deployment, open the Web app URL in a browser. A working deployment returns JSON with
+`"ok":true` and `"Wagyu order endpoint is live"`.
+
+If Google shows `Script function not found: doPost` or `Script function not found: doGet`,
+the live deployment is stale or points to the wrong Apps Script project. In Apps Script, use
+**Deploy > Manage deployments > Edit > Version > New version > Deploy**, then copy the `/exec`
+URL back into `GOOGLE_SCRIPT_URL`.
+
+This static site cannot write directly to a local `.csv` file from GitHub Pages or a browser.
+The Google Sheet is the writable backend; export or publish that Sheet as CSV afterward if you
+need a CSV view.
+
 The Apps Script creates an `Orders` sheet automatically if one does not exist, then appends each order with:
 
 - order ID
@@ -46,11 +58,9 @@ The Apps Script creates an `Orders` sheet automatically if one does not exist, t
 - WeChat nickname
 - WeChat ID
 - note
+- item name
 - item count
-- subtotal
-- discount
-- total
-- line items as JSON
+- item estimated amount
 
 ## Deploy With GitHub Pages
 

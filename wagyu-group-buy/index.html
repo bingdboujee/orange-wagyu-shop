@@ -6,7 +6,7 @@
     <title>🍊橙姐和牛肉铺 | 牛羊肉专区</title>
     <meta
       name="description"
-      content="和牛肋条、金钱腱、和牛吊龙、和牛肥牛、羊肉卷、牛仔骨限时开团，支持购物车自助下单并提交到 Google Sheets。"
+      content="和牛肋条、金钱腱、和牛吊龙、和牛肥牛、羊肉卷、牛仔骨、鸡脆骨限时开团，支持购物车自助下单并提交到 Google Sheets。"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -39,7 +39,7 @@
             <p class="eyebrow">Beef & Lamb</p>
             <h1>牛羊肉专区</h1>
             <p class="hero-text">
-              精选 6 款适合火锅、烧烤和家庭囤货的高频商品。直接加到购物车，填写微信昵称和微信号后即可提交订单。
+              精选 7 款适合火锅、烧烤和家庭囤货的高频商品。直接加到购物车，填写微信昵称和微信号后即可提交订单。
             </p>
 
             <div class="hero-actions">
@@ -66,7 +66,6 @@
               <li>商品卡片直接加减数量</li>
               <li>提交时带微信昵称、微信号、备注</li>
             </ul>
-            <p class="card-note">你后续只需要把提交地址换成自己的 Google Apps Script Web App。</p>
           </aside>
         </div>
       </header>
@@ -79,7 +78,7 @@
           </div>
 
           <div class="product-grid">
-            <article class="product-card featured" data-product-card data-name="和牛肋条" data-price="14" data-unit="3-4磅">
+            <article class="product-card featured" data-product-card data-name="和牛肋条" data-price="14" data-unit="3-4磅/份" data-price-unit="磅" data-min-weight="3" data-max-weight="4">
               <div class="product-media media-rib">
                 <span class="product-badge">Best Seller</span>
                 <div class="media-copy">
@@ -89,10 +88,10 @@
               </div>
               <span class="tag">烧烤王者</span>
               <h3>和牛肋条</h3>
-              <p>脂香足、肉感厚，适合烧烤、铁板和空气炸锅，越嚼越香。</p>
+              <p>脂香足、肉感厚，适合烧烤、铁板和空气炸锅，按实际重量结算。</p>
               <div class="product-meta">
-                <strong>$14 / 3-4磅</strong>
-                <span>300+ 人想买</span>
+                <strong>$14 / 磅</strong>
+                <span>约 3-4 磅/份</span>
               </div>
               <div class="qty-picker">
                 <button type="button" class="qty-btn" data-action="decrease">-</button>
@@ -101,7 +100,7 @@
               </div>
             </article>
 
-            <article class="product-card" data-product-card data-name="金钱腱" data-price="8.5" data-unit="3-4磅">
+            <article class="product-card" data-product-card data-name="金钱腱" data-price="8.5" data-unit="3-4磅/份" data-price-unit="磅" data-min-weight="3" data-max-weight="4">
               <div class="product-media media-shank">
                 <span class="product-badge">Slow Cook</span>
                 <div class="media-copy">
@@ -111,10 +110,10 @@
               </div>
               <span class="tag">炖煮推荐</span>
               <h3>金钱腱</h3>
-              <p>筋花漂亮，卤煮后层次丰富，做凉切和牛腱子都很出彩。</p>
+              <p>筋花漂亮，卤煮后层次丰富，做凉切和牛腱子很出彩，按实际重量结算。</p>
               <div class="product-meta">
-                <strong>$8.5 / 3-4磅</strong>
-                <span>适合卤煮</span>
+                <strong>$8.5 / 磅</strong>
+                <span>约 3-4 磅/份</span>
               </div>
               <div class="qty-picker">
                 <button type="button" class="qty-btn" data-action="decrease">-</button>
@@ -145,7 +144,7 @@
               </div>
             </article>
 
-            <article class="product-card" data-product-card data-name="和牛肥牛" data-price="18" data-unit="12oz">
+            <article class="product-card" data-product-card data-name="和牛肥牛" data-price="13" data-unit="磅" data-price-unit="磅">
               <div class="product-media media-roll">
                 <span class="product-badge">Popular</span>
                 <div class="media-copy">
@@ -157,8 +156,30 @@
               <h3>和牛肥牛</h3>
               <p>肥瘦均匀，火锅、寿喜锅、洋葱肥牛饭都很稳，接受度最高。</p>
               <div class="product-meta">
-                <strong>$18 / 12oz</strong>
-                <span>回购很高</span>
+                <strong>$13 / 磅</strong>
+                <span>按磅称重</span>
+              </div>
+              <div class="qty-picker">
+                <button type="button" class="qty-btn" data-action="decrease">-</button>
+                <span class="qty-value" data-qty>0</span>
+                <button type="button" class="qty-btn" data-action="increase">+</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card data-name="鸡脆骨" data-price="6.5" data-unit="磅" data-price-unit="磅" data-min-quantity="2">
+              <div class="product-media media-chicken">
+                <span class="product-badge">New</span>
+                <div class="media-copy">
+                  <small>Chicken Cartilage</small>
+                  <strong>鸡脆骨</strong>
+                </div>
+              </div>
+              <span class="tag">两磅起购</span>
+              <h3>鸡脆骨</h3>
+              <p>爽脆弹牙，适合烧烤、空气炸锅和下酒小菜，简单调味就很香。</p>
+              <div class="product-meta">
+                <strong>$6.5 / 磅</strong>
+                <span>2 磅起购</span>
               </div>
               <div class="qty-picker">
                 <button type="button" class="qty-btn" data-action="decrease">-</button>
@@ -189,7 +210,7 @@
               </div>
             </article>
 
-            <article class="product-card" data-product-card data-name="和牛牛仔骨" data-price="15" data-unit="3磅">
+            <article class="product-card" data-product-card data-name="和牛牛仔骨" data-price="15" data-unit="约3磅/份" data-price-unit="磅" data-min-weight="3" data-max-weight="3">
               <div class="product-media media-bone">
                 <span class="product-badge">BBQ Pick</span>
                 <div class="media-copy">
@@ -197,12 +218,12 @@
                   <strong>和牛牛仔骨</strong>
                 </div>
               </div>
-              <span class="tag">宴客选手</span>
+              <span class="tag">20盒成团</span>
               <h3>和牛牛仔骨</h3>
-              <p>适合韩式烤肉、黑椒煎烤，骨边肉汁香气足，端上桌就有排面。</p>
+              <p>适合韩式烤肉、黑椒煎烤，骨边肉汁香气足，价格按实际重量结算。</p>
               <div class="product-meta">
-                <strong>$15 / 3磅</strong>
-                <span>聚餐推荐</span>
+                <strong>$15 / 磅</strong>
+                <span>约 3 磅/份</span>
               </div>
               <div class="qty-picker">
                 <button type="button" class="qty-btn" data-action="decrease">-</button>
@@ -219,8 +240,7 @@
               <p class="eyebrow">Cart</p>
               <h2>购物车结算</h2>
               <p>
-                当前页面默认预留了 Google Sheets
-                提交接口。如果你还没填接口地址，页面会先提示你配置；填好后就能正式收单。
+                牛肋条、金钱腱、牛仔骨等称重商品仅显示预估金额；最终价格以实际称重为准。
               </p>
             </div>
 
@@ -251,8 +271,8 @@
                     <strong id="summary-discount">-$0</strong>
                   </div>
                   <div>
-                    <span>实付金额</span>
-                    <strong id="summary-total">$0</strong>
+                    <span>预估金额</span>
+                    <strong id="summary-total">$0.00</strong>
                   </div>
                 </div>
               </div>
