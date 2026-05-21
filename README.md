@@ -1,13 +1,13 @@
 # Orange Wagyu Shop
 
-Static storefront for a small orange-themed wagyu group-buy page. The site lets customers browse beef, lamb, and chicken cartilage products, adjust quantities in a cart, enter WeChat contact details, and submit the order to a Google Sheet through Google Apps Script.
+Static storefront for a small orange-themed wagyu group-buy page. The site lets customers browse beef, lamb, and chicken cartilage products, adjust quantities in a cart, enter contact details, and submit the order to a Google Sheet through Google Apps Script.
 
 ## What It Includes
 
 - Responsive product landing page in Chinese
 - Product cards with quantity controls
 - Live cart summary with item count, subtotal, discount, and total
-- Checkout form for WeChat nickname, WeChat ID, and order notes
+- Checkout form for nickname, phone number, and order notes
 - Google Apps Script handler that appends submitted orders to a Google Sheet
 
 ## Project Structure
@@ -55,8 +55,8 @@ The Apps Script creates an `Orders` sheet automatically if one does not exist, t
 
 - order ID
 - timestamp
-- WeChat nickname
-- WeChat ID
+- nickname
+- phone number
 - note
 - item name
 - item count
