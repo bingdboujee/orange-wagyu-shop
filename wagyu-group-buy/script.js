@@ -33,6 +33,22 @@ const products = productCards.map((card) => ({
 }));
 
 const cart = Object.fromEntries(products.map((product) => [product.id, 0]));
+let lastTouchEnd = 0;
+
+document.addEventListener(
+  "touchend",
+  (event) => {
+    const activeInput = event.target.closest("input, textarea, select");
+    const now = Date.now();
+
+    if (!activeInput && now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+
+    lastTouchEnd = now;
+  },
+  { passive: false }
+);
 
 function getCartItems() {
   return products
